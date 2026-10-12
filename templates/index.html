@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Meet the team</h1>
+    <p class="count">
+      {{ employees|length }} teammate{{ '' if employees|length == 1 else 's' }}
+      {% if search %}matching &ldquo;{{ search }}&rdquo;{% endif %}
+    </p>
+  </div>
+  <form class="search" method="get" action="{{ url_for('index') }}">
+    <input type="text" name="q" value="{{ search }}" placeholder="search name, role, team...">
+    <button class="btn small" type="submit">find</button>
+  </form>
+</section>
+
+{% if employees %}
+<div class="grid">
+  {% for e in employees %}
+  <article class="card">
+    <div class="avatar dept-{{ e['department']|lower }}">{{ e['name'][0]|upper }}</div>
+    <h2>{{ e['name'] }}</h2>
+    <p class="role">{{ e['role'] or 'Team member' }}</p>
+    <span class="tag dept-{{ e['department']|lower }}">{{ e['department'] }}</span>
+    <p class="mail">{{ e['email'] }}</p>
+    <div class="actions">
+      <a class="link" href="{{ url_for('edit', emp_id=e['id']) }}">edit</a>
+      <form method="post" action="{{ url_for('delete', emp_id=e['id']) }}"
+            onsubmit="return confirm('Remove this teammate?');">
+        <button class="link danger" type="submit">remove</button>
+      </form>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+  <p>It's quiet in here...</p>
+  <a class="btn" href="{{ url_for('add') }}">add the first teammate</a>
+</div>
+{% endif %}
+{% endblock %}

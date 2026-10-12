@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Tiny Team HQ{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="{{ url_for('index') }}">
+      <svg class="mascot" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 5c10 0 17 8 17 19s-7 19-17 19S7 35 7 24 14 5 24 5z" fill="#ffe08a" stroke="#3b2f2f" stroke-width="2.5"/>
+        <circle cx="18" cy="22" r="2.2" fill="#3b2f2f"/>
+        <circle cx="30" cy="22" r="2.2" fill="#3b2f2f"/>
+        <path d="M19 29c2 3 8 3 10 0" fill="none" stroke="#3b2f2f" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="14" cy="28" r="2.5" fill="#f6b8c8"/>
+        <circle cx="34" cy="28" r="2.5" fill="#f6b8c8"/>
+      </svg>
+      <span>Tiny Team HQ</span>
+    </a>
+    <a class="btn" href="{{ url_for('add') }}">+ add teammate</a>
+  </header>
+
+  <main>
+    {% with messages = get_flashed_messages() %}
+      {% for m in messages %}
+        <div class="note">{{ m }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>Tiny Team HQ &middot; employee management</footer>
+</body>
+</html>

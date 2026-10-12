@@ -1,0 +1,11 @@
+# Run the whole app locally with one command:  docker compose up --build
+services:
+  web:
+    build: .
+    ports:
+      - "5001:5000"
+    volumes:
+      - emp-data:/data      # keeps the database safe when the container restarts
+
+volumes:
+  emp-data:

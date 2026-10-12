@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} &middot; Tiny Team HQ{% endblock %}
+
+{% block content %}
+<section class="form-card">
+  <h1>{{ title }}</h1>
+  <form method="post">
+    <label>Name
+      <input type="text" name="name" value="{{ employee.name }}" required>
+    </label>
+
+    <label>Email
+      <input type="email" name="email" value="{{ employee.email }}" required>
+    </label>
+
+    <label>Department
+      <select name="department" required>
+        <option value="" disabled {% if not employee.department %}selected{% endif %}>pick one</option>
+        {% for d in departments %}
+        <option value="{{ d }}" {% if employee.department == d %}selected{% endif %}>{{ d }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Role
+      <input type="text" name="role" value="{{ employee.role or '' }}" placeholder="e.g. Backend developer">
+    </label>
+
+    <div class="form-actions">
+      <button class="btn" type="submit">save</button>
+      <a class="link" href="{{ url_for('index') }}">cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
